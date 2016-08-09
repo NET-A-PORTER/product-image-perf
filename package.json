@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run compile && node build/index.js",
-    "compile": "./node_modules/.bin/babel ./index.js --out-dir build/ --copy-files",
+    "compile": "./node_modules/.bin/babel ./index.js ./src/* --out-dir build/ --copy-files",
     "test": "npm test"
   },
   "repository": {
@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "babel-runtime": "^6.11.6",
+    "blessed": "^0.1.81",
     "request": "^2.74.0"
   }
 }

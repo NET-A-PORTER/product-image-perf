@@ -1,35 +1,19 @@
-"use strict";
+'use strict';
 
-var _regenerator = require("babel-runtime/regenerator");
+var _regenerator = require('babel-runtime/regenerator');
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var request = require("request");
-var path = require('path');
+var graph = require('./src/graph');
+var requestPromise = require('./src/request-promise');
 
 function getLadUrl(brand) {
-    var numberOfPids = arguments.length <= 1 || arguments[1] === undefined ? 10 : arguments[1];
+    var numberOfPids = arguments.length <= 1 || arguments[1] === undefined ? 2 : arguments[1];
 
-    return "http://lad-api.net-a-porter.com:80/" + brand + "/GB/" + numberOfPids + "/0/pids?visibility=visible&whatsNew=Now";
-}
-
-function requestPromise(url, json, time) {
-    json = json || false;
-    time = time || false;
-    return new Promise(function (resolve, reject) {
-        request({ url: url, json: json, time: time }, function (err, res) {
-            if (err) {
-                return reject(err);
-            } else if (res.statusCode !== 200) {
-                err = new Error("Unexpected status code: " + res.statusCode);
-                err.res = res;
-                return reject(err);
-            }
-            resolve(res);
-        });
-    });
+    return 'http://lad-api.net-a-porter.com:80/' + brand + '/GB/' + numberOfPids + '/0/pids?visibility=visible&whatsNew=Now';
 }
 
 function generateCacheBuster() {
@@ -70,11 +54,12 @@ function generateCacheBuster() {
                         ton: _context.t2
                     };
 
-                    console.log('performance');
-                    console.log(performance);
+                    console.log(graph);
+                    graph(performance);
+                    console.log('this');
 
-                case 15:
-                case "end":
+                case 16:
+                case 'end':
                     return _context.stop();
             }
         }
@@ -128,7 +113,7 @@ function getImagePerformanceAverages(brand, pids) {
 
                 case 21:
                     _context2.prev = 21;
-                    _context2.t0 = _context2["catch"](6);
+                    _context2.t0 = _context2['catch'](6);
                     _didIteratorError = true;
                     _iteratorError = _context2.t0;
 
@@ -157,7 +142,7 @@ function getImagePerformanceAverages(brand, pids) {
                     return _context2.finish(25);
 
                 case 33:
-                    return _context2.abrupt("return", {
+                    return _context2.abrupt('return', {
                         pids: pids,
                         imagePerformance: imagePerformance,
                         average: {
@@ -167,7 +152,7 @@ function getImagePerformanceAverages(brand, pids) {
                     });
 
                 case 34:
-                case "end":
+                case 'end':
                     return _context2.stop();
             }
         }
@@ -186,7 +171,7 @@ function getPids() {
 
                 case 3:
                     brandPidsArr = _context3.sent;
-                    return _context3.abrupt("return", {
+                    return _context3.abrupt('return', {
                         nap: brandPidsArr[0].body,
                         mrp: brandPidsArr[1].body,
                         ton: brandPidsArr[2].body
@@ -194,12 +179,12 @@ function getPids() {
 
                 case 7:
                     _context3.prev = 7;
-                    _context3.t0 = _context3["catch"](0);
+                    _context3.t0 = _context3['catch'](0);
 
                     console.error(_context3.t0);
 
                 case 10:
-                case "end":
+                case 'end':
                     return _context3.stop();
             }
         }
@@ -245,10 +230,10 @@ function buildImagePerformanceObject(brand, pid) {
                     performanceObject.average.origin = Math.round(average(performanceObject.origin));
                     performanceObject.average.cache = Math.round(average(performanceObject.cache));
 
-                    return _context4.abrupt("return", performanceObject);
+                    return _context4.abrupt('return', performanceObject);
 
                 case 15:
-                case "end":
+                case 'end':
                     return _context4.stop();
             }
         }
@@ -267,7 +252,7 @@ function getImagePerformance(brand, pid) {
         while (1) {
             switch (_context5.prev = _context5.next) {
                 case 0:
-                    imageUrl = "http://cache." + brand + ".com/images/products/" + pid + "/" + pid + "_in_m2.jpg";
+                    imageUrl = 'http://cache.' + brand + '.com/images/products/' + pid + '/' + pid + '_in_m2.jpg';
                     originUrl = [imageUrl, '?cachebuster=', generateCacheBuster()].join('');
                     _context5.prev = 2;
                     _context5.next = 5;
@@ -275,19 +260,19 @@ function getImagePerformance(brand, pid) {
 
                 case 5:
                     performance = _context5.sent;
-                    return _context5.abrupt("return", {
+                    return _context5.abrupt('return', {
                         origin: performance[0].elapsedTime,
                         cache: performance[1].elapsedTime
                     });
 
                 case 9:
                     _context5.prev = 9;
-                    _context5.t0 = _context5["catch"](2);
+                    _context5.t0 = _context5['catch'](2);
 
                     console.error('The follow url was broken:', originUrl);
 
                 case 12:
-                case "end":
+                case 'end':
                     return _context5.stop();
             }
         }

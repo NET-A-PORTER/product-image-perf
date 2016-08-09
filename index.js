@@ -1,26 +1,9 @@
 const request = require("request");
-const path = require('path');
+const graph = require('./src/graph');
+const requestPromise = require('./src/request-promise');
 
-function getLadUrl(brand, numberOfPids = 10) {
+function getLadUrl(brand, numberOfPids = 2) {
     return `http://lad-api.net-a-porter.com:80/${brand}/GB/${numberOfPids}/0/pids?visibility=visible&whatsNew=Now`;
-}
-
-
-function requestPromise(url, json, time) {
-    json = json || false;
-    time = time || false;
-    return new Promise(function (resolve, reject) {
-         request({url:url, json:json, time: time}, function (err, res) {
-             if (err) {
-                 return reject(err);
-             } else if (res.statusCode !== 200) {
-                 err = new Error("Unexpected status code: " + res.statusCode);
-                 err.res = res;
-                 return reject(err);
-             }
-             resolve(res);
-         });
-    });
 }
 
 function generateCacheBuster() {
@@ -36,8 +19,7 @@ function generateCacheBuster() {
         mrp: await getImagePerformanceAverages('mrporter', brandPids.mrp.pids),
         ton: await getImagePerformanceAverages('theoutnet', brandPids.ton.pids)
     };
-    console.log('performance');
-    console.log(performance);
+    graph(performance);
 })();
 
 
@@ -106,7 +88,7 @@ async function buildImagePerformanceObject(brand, pid) {
 }
 
 function average(performanceArray) {
-    return performanceArray.reduce(function (a, b) {
+    return performanceArray.reduce(function(a, b) {
         return a + b;
     }) / performanceArray.length;
 }
