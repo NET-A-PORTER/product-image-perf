@@ -29,6 +29,7 @@
   "dependencies": {
     "babel-runtime": "^6.11.6",
     "blessed": "^0.1.81",
+    "blessed-contrib": "^3.5.5",
     "request": "^2.74.0"
   }
 }
