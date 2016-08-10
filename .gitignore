@@ -33,3 +33,7 @@ jspm_packages
 
 # Benchmarks - only keep one sample
 benchmarks/*
+
+#File crap
+.DS_Store
+static/.DS_Store
