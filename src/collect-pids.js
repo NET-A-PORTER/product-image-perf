@@ -6,7 +6,7 @@ async function init() {
     return brandPids;
 }
 
-function getLadUrl(brand, numberOfPids = 2) {
+function getLadUrl(brand, numberOfPids = 100) {
     var url = `http://lad-api.net-a-porter.com:80/${brand}/GB/${numberOfPids}/0/pids?visibility=visible&whatsNew=Now`;
     console.log('Gettings pids from: ', url);
     return url;
