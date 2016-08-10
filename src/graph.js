@@ -2,8 +2,6 @@ const blessed = require('blessed');
 const contrib = require('blessed-contrib');
 
 function init(metrics) {
-   console.log('metrics');
-   console.log(metrics);
     const screen = blessed.screen();
     const grid = new contrib.grid({
         rows: 2,
@@ -19,7 +17,7 @@ function init(metrics) {
         },
         xLabelPadding: 3,
         xPadding: 5,
-        label: 'Images',
+        label: 'Images average',
         showLegend: true
     });
 
@@ -36,7 +34,7 @@ function init(metrics) {
     line.setData(lineData);
 
     var bar = grid.set(1, 0, 1, 1, contrib.bar, {
-        label: 'Image average',
+        label: 'Brand average',
         barWidth: 15,
         barSpacing: 4,
         xOffset: 0,

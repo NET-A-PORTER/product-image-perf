@@ -1,7 +1,7 @@
 var requestPromise = require('./request-promise');
 
 async function getImagePerformanceAverages(brand, pids) {
-    console.log('load', brand);
+    console.log('Performance testing: ', brand);
     var imagePerformance = [];
     var tempAverage = {
         origin: [],
