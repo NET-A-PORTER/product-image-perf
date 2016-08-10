@@ -5,7 +5,6 @@ const getImagePerformanceAverages = require('./src/image-performance');
 const fileSystem = require('./src/file-system');
 
 (async function() {
-
     const benchMarkFilename = process.env.BENCHMARK_FILENAME;
     var performance;
 
@@ -20,7 +19,6 @@ const fileSystem = require('./src/file-system');
         }
         fileSystem.saveBenchmarksToDisk(performance);
     };
-
 
     // load pids from file
     graph(performance);

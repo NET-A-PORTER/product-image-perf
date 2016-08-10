@@ -16,10 +16,18 @@ const fileSystem = {
       return JSON.parse(fs.readFileSync(path, {
          encoding: 'utf8'
       }));
+   },
+   loadPidsFromDisk(filename) {
+      const path = `./pids/${filename}`;
+      console.log('Reading pids from disk: ', filename);
+      return JSON.parse(fs.readFileSync(path, {
+         encoding: 'utf8'
+      }));
    }
 };
 
 module.exports = {
    saveBenchmarksToDisk: fileSystem.saveBenchmarksToDisk,
-   loadBenchmarksFromDisk:fileSystem.loadBenchmarksFromDisk
+   loadBenchmarksFromDisk:fileSystem.loadBenchmarksFromDisk,
+   loadPidsFromDisk: fileSystem.loadPidsFromDisk
 };
