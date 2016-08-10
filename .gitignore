@@ -32,4 +32,4 @@ jspm_packages
 .node_repl_history
 
 # Benchmarks - only keep one sample
-./benchmarks/*
+benchmarks/*

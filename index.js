@@ -20,6 +20,5 @@ const fileSystem = require('./src/file-system');
         fileSystem.saveBenchmarksToDisk(performance);
     };
 
-    // load pids from file
     graph(performance);
 })();

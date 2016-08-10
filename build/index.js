@@ -61,7 +61,6 @@ var fileSystem = require('./src/file-system');
                 case 19:
                     ;
 
-                    // load pids from file
                     graph(performance);
 
                 case 21:
