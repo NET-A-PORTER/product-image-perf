@@ -24,10 +24,15 @@ Once complete it will save this data and display the results in terminal.
 Each time you run a performance test it will save a benchmark inside the folder: `benchmarks`. If you want to graph an existing benchmark you can:
 
 ```bash
-  BENCHMARK_FILENAME=2016-08-10_09:19:19.json npm start
+  BENCHMARK_FILENAME=2016-08-11_14-41-13.json npm start
 ```
 
 ### Configuration
+
+Randomize PID list, default hits whats new pid list, this is more likely to be cached within resize service:
+```bash
+    RANDOM_PIDS=true npm start
+```
 
 Alter the number of PIDS (Product IDs):
 ```bash

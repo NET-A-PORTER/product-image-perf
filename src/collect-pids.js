@@ -7,8 +7,27 @@ async function init() {
 }
 
 function getLadUrl(brand, numberOfPids = 100) {
-    var url = `http://lad-api.net-a-porter.com:80/${brand}/GB/${numberOfPids}/0/pids?visibility=visible&whatsNew=Now`;
+    var url;
+    if(process.env.RANDOM_PIDS) {
+        url = generateRandomLadUrl(brand, numberOfPids);
+    } else {
+        url = `http://lad-api.net-a-porter.com:80/${brand}/GB/${numberOfPids}/0/pids?visibility=visible&whatsNew=Now`;
+    }
     console.log('Gettings pids from: ', url);
+    return url;
+}
+
+function generateRandomLadUrl(brand, numberOfPids) {
+    // should really see how many products there are first, but this is a guess there will never be less than 2000;
+    var offset = Math.floor(Math.random() * 1900);
+    var sortArr = [
+        'discount',
+        'price-asc',
+        'price-desc',
+        'new-in'
+    ];
+    var sort = sortArr[Math.floor(Math.random() * 4)];
+    var url = `http://lad-api.net-a-porter.com:80/${brand}/GB/${numberOfPids}/${offset}/pids?visibility=visible&sort=${sort}`;
     return url;
 }
 

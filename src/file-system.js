@@ -3,8 +3,9 @@ const fileSystem = {
    saveBenchmarksToDisk(performanceMetrics) {
       const date = new Date()
                         .toISOString()
-                        .replace(/T/, ' ')
-                        .replace(/\..+/, '');
+                        .replace(/T/, '_')
+                        .replace(/\..+/, '')
+                        .replace(/:/g, '-')
       const filename = `${date}.json`;
       const path = `./benchmarks/${filename}`;
       console.log('Writing performance benchmarks to disk: ', filename);
