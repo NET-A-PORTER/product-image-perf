@@ -2,14 +2,13 @@ const requestPromise = require('./request-promise');
 const fileSystem = require('./file-system');
 
 async function init() {
-    var brandPids = await getPids();
-    return brandPids;
+    return await _getPids();
 }
 
 function getLadUrl(brand, numberOfPids = 100) {
     var url;
     if(process.env.RANDOM_PIDS) {
-        url = generateRandomLadUrl(brand, numberOfPids);
+        url = _generateRandomLadUrl(brand, numberOfPids);
     } else {
         url = `http://lad-api.net-a-porter.com:80/${brand}/GB/${numberOfPids}/0/pids?visibility=visible&whatsNew=Now`;
     }
@@ -17,28 +16,27 @@ function getLadUrl(brand, numberOfPids = 100) {
     return url;
 }
 
-function generateRandomLadUrl(brand, numberOfPids) {
+function _generateRandomLadUrl(brand, numberOfPids) {
     // should really see how many products there are first, but this is a guess there will never be less than 2000;
-    var offset = Math.floor(Math.random() * 1900);
-    var sortArr = [
+    const offset = Math.floor(Math.random() * 1900);
+    const sortArr = [
         'discount',
         'price-asc',
         'price-desc',
         'new-in'
     ];
-    var sort = sortArr[Math.floor(Math.random() * 4)];
-    var url = `http://lad-api.net-a-porter.com:80/${brand}/GB/${numberOfPids}/${offset}/pids?visibility=visible&sort=${sort}`;
-    return url;
+    const sort = sortArr[Math.floor(Math.random() * 4)];
+    return `http://lad-api.net-a-porter.com:80/${brand}/GB/${numberOfPids}/${offset}/pids?visibility=visible&sort=${sort}`;
 }
 
-async function getPids() {
-    var numberOfPids = process.env.NUMBER_OF_PIDS;
+async function _getPids() {
+    const numberOfPids = process.env.NUMBER_OF_PIDS;
 
     try {
-        var brandPidsArr = await Promise.all([
-            loadPids('NAP_LOCAL_PIDS', 'nap.json', 'TON', numberOfPids),
-            loadPids('MRP_LOCAL_PIDS', 'mrp.json', 'MRP', numberOfPids),
-            loadPids('TON_LOCAL_PIDS', 'ton.json', 'TON', numberOfPids)
+        const brandPidsArr = await Promise.all([
+            _loadPids('NAP_LOCAL_PIDS', 'nap.json', 'TON', numberOfPids),
+            _loadPids('MRP_LOCAL_PIDS', 'mrp.json', 'MRP', numberOfPids),
+            _loadPids('TON_LOCAL_PIDS', 'ton.json', 'TON', numberOfPids)
         ]);
         return {
             nap: brandPidsArr[0],
@@ -51,7 +49,7 @@ async function getPids() {
 
 }
 
-async function loadPids(key, filename, brand, numberOfPids) {
+async function _loadPids(key, filename, brand, numberOfPids) {
     var pids;
     if (process.env[key]) {
         pids = fileSystem.loadPidsFromDisk(filename);

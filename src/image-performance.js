@@ -9,7 +9,7 @@ async function getImagePerformanceAverages(brand, pids) {
     };
 
     for (let pid of pids) {
-        var performance = await buildImagePerformanceObject(brand, pid);
+        var performance = await _buildImagePerformanceObject(brand, pid);
         imagePerformance.push(performance);
         tempAverage.origin.push(performance.average.origin);
         tempAverage.cache.push(performance.average.cache);
@@ -19,14 +19,14 @@ async function getImagePerformanceAverages(brand, pids) {
         pids: pids,
         imagePerformance: imagePerformance,
         average: {
-            origin: average(tempAverage.origin),
-            cache: average(tempAverage.cache)
+            origin: _average(tempAverage.origin),
+            cache: _average(tempAverage.cache)
         }
     };
 }
 
-async function buildImagePerformanceObject(brand, pid) {
-    const numberOfTests = 10;
+async function _buildImagePerformanceObject(brand, pid) {
+    const numberOfTests = process.env.NUMBER_OF_TESTS || 10;
     var performanceObject = {
         origin: [],
         cache: [],
@@ -34,27 +34,27 @@ async function buildImagePerformanceObject(brand, pid) {
     };
 
     for (let i = 0; i < numberOfTests; i++) {
-        var performance = await getImagePerformance(brand, pid);
+        var performance = await _getImagePerformance(brand, pid);
         performanceObject.origin.push(performance.origin);
         performanceObject.cache.push(performance.cache);
     }
 
-    performanceObject.average.origin = Math.round(average(performanceObject.origin));
-    performanceObject.average.cache = Math.round(average(performanceObject.cache));
+    performanceObject.average.origin = Math.round(_average(performanceObject.origin));
+    performanceObject.average.cache = Math.round(_average(performanceObject.cache));
 
     return performanceObject;
 
 }
 
-function average(performanceArray) {
+function _average(performanceArray) {
     return performanceArray.reduce(function(a, b) {
         return a + b;
     }) / performanceArray.length;
 }
 
-async function getImagePerformance(brand, pid) {
-    var imageUrl = `http://cache.${brand}.com/images/products/${pid}/${pid}_in_m2.jpg`;
-    var originUrl = [imageUrl, '?cachebuster=', generateCacheBuster()].join('')
+async function _getImagePerformance(brand, pid) {
+    const imageUrl = `http://cache.${brand}.com/images/products/${pid}/${pid}_in_m2.jpg`;
+    const originUrl = [imageUrl, '?cachebuster=', _generateCacheBuster()].join('')
     try {
         var performance = await Promise.all([
             requestPromise(originUrl, false, true),
@@ -69,7 +69,8 @@ async function getImagePerformance(brand, pid) {
     }
 }
 
-function generateCacheBuster() {
+// generate random param for cache busting image
+function _generateCacheBuster() {
     var time = Math.round(new Date().getTime() / 1000).toString();
     var hash = Math.random().toString(10).substr(2);
     return [time, hash].join('_');

@@ -1,5 +1,6 @@
 const request = require("request");
 
+// mr own promise wrapper around request because promise-request didn't have elapsedTime
 module.exports = function requestPromise(url, json, time) {
     json = json || false;
     time = time || false;

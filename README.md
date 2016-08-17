@@ -34,9 +34,14 @@ Randomize PID list, default hits whats new pid list, this is more likely to be c
     RANDOM_PIDS=true npm start
 ```
 
-Alter the number of PIDS (Product IDs):
+Alter the number of PIDS (Product IDs) - default 100:
 ```bash
     NUMBER_OF_PIDS=20 npm start
+```
+
+Alter the number of tests on an image - default 10:
+```bash
+    NUMBER_OF_TESTS=20 npm start
 ```
 
 Load local PID list:
