@@ -34,7 +34,7 @@ async function _getPids() {
 
     try {
         const brandPidsArr = await Promise.all([
-            _loadPids('NAP_LOCAL_PIDS', 'nap.json', 'TON', numberOfPids),
+            _loadPids('NAP_LOCAL_PIDS', 'nap.json', 'NAP', numberOfPids),
             _loadPids('MRP_LOCAL_PIDS', 'mrp.json', 'MRP', numberOfPids),
             _loadPids('TON_LOCAL_PIDS', 'ton.json', 'TON', numberOfPids)
         ]);
