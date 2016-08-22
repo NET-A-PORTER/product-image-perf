@@ -53,7 +53,7 @@ function _average(performanceArray) {
 }
 
 async function _getImagePerformance(brand, pid) {
-    const imageUrl = `http://cache.${brand}.com/images/products/${pid}/${pid}${ brand === 'mrporter' ? '_mrp' : ''}_in_m2.jpg`;
+    const imageUrl = `http://cache.${brand}.com/images/products/${pid}/${pid}_in_m2.jpg`;
     const originUrl = [imageUrl, '?cachebuster=', _generateCacheBuster()].join('')
     try {
         var performance = await Promise.all([
