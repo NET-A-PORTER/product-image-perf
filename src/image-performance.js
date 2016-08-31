@@ -1,7 +1,11 @@
 var requestPromise = require('./request-promise');
+var ProgressBar = require('progress');
+
+const numberOfTests = process.env.NUMBER_OF_TESTS || 10;
+var bar;
 
 async function getImagePerformanceAverages(brand, pids) {
-    console.log('Performance testing: ', brand);
+    bar = new ProgressBar(`Performance testing ${brand} [:bar] :percent :etas`, { width: 30, total: pids.length*numberOfTests })
     var imagePerformance = [];
     var tempAverage = {
         origin: [],
@@ -26,7 +30,7 @@ async function getImagePerformanceAverages(brand, pids) {
 }
 
 async function _buildImagePerformanceObject(brand, pid) {
-    const numberOfTests = process.env.NUMBER_OF_TESTS || 10;
+    
     var performanceObject = {
         origin: [],
         cache: [],
@@ -53,6 +57,7 @@ function _average(performanceArray) {
 }
 
 async function _getImagePerformance(brand, pid) {
+    bar.tick();
     const imageUrl = `http://cache.${brand}.com/images/products/${pid}/${pid}_in_m2.jpg`;
     const originUrl = [imageUrl, '?cachebuster=', _generateCacheBuster()].join('')
     try {

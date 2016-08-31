@@ -29,6 +29,11 @@ Each time you run a performance test it will save a benchmark inside the folder:
 
 ### Configuration
 
+Run the tests only for some of the brands:
+```bash
+    npm start mrp nap
+```
+
 Randomize PID list, default hits whats new pid list, this is more likely to be cached within resize service:
 ```bash
     RANDOM_PIDS=true npm start
