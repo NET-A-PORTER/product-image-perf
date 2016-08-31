@@ -1,8 +1,8 @@
-const requestPromise = require('./request-promise');
-const fileSystem = require('./file-system');
+const requestPromise = require('./request-promise'),
+      fileSystem     = require('./file-system');
 
-async function init() {
-    return await _getPids();
+async function init(brands) {
+    return await _getPids(brands);
 }
 
 function getLadUrl(brand, numberOfPids = 100) {
@@ -29,24 +29,30 @@ function _generateRandomLadUrl(brand, numberOfPids) {
     return `http://lad-api.net-a-porter.com:80/${brand}/GB/${numberOfPids}/${offset}/pids?visibility=visible&sort=${sort}`;
 }
 
-async function _getPids() {
+async function _getPids(brands) {
     const numberOfPids = process.env.NUMBER_OF_PIDS;
+    console.log('Brands: ',brands);
+    let pidFetchList = [];
+
+    for (let brand of brands) {
+        pidFetchList.push(
+            _loadPids(brand.toUpperCase() + '_LOCAL_PIDS', brand.toLowerCase() + '.json', brand.toUpperCase(), numberOfPids)
+        );
+    }
 
     try {
-        const brandPidsArr = await Promise.all([
-            _loadPids('NAP_LOCAL_PIDS', 'nap.json', 'NAP', numberOfPids),
-            _loadPids('MRP_LOCAL_PIDS', 'mrp.json', 'MRP', numberOfPids),
-            _loadPids('TON_LOCAL_PIDS', 'ton.json', 'TON', numberOfPids)
-        ]);
-        return {
-            nap: brandPidsArr[0],
-            mrp: brandPidsArr[1],
-            ton: brandPidsArr[2]
-        };
+        var result = {};
+        const brandPidsArr = await Promise.all(pidFetchList);
+
+        // Collect the results
+        let c = 0;
+        for (let brand of brands) {
+            result[brand] = brandPidsArr[c++];
+        }
+        return result;
     } catch (error) {
         console.error(error);
     }
-
 }
 
 async function _loadPids(key, filename, brand, numberOfPids) {

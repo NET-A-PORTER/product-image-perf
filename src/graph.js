@@ -1,5 +1,7 @@
-const blessed = require('blessed');
-const contrib = require('blessed-contrib');
+const blessed = require('blessed'),
+      contrib = require('blessed-contrib');
+
+var colors = ['yellow', 'cyan', 'magenta', 'red', 'green', 'blue', 'white'];
 
 function init(metrics) {
     // set up dashboard
@@ -24,14 +26,22 @@ function init(metrics) {
     });
 
     // http://unix.stackexchange.com/questions/105568/how-can-i-list-the-available-color-names
-    line.setData([
-        _generateOptionsForLineOnGraph('NAP cache', metrics.nap.imagePerformance, 'cache', 'magenta'),
-        _generateOptionsForLineOnGraph('NAP origin', metrics.nap.imagePerformance, 'origin', 'red'),
-        _generateOptionsForLineOnGraph('MRP cache', metrics.mrp.imagePerformance, 'cache', 'cyan'),
-        _generateOptionsForLineOnGraph('MRP origin', metrics.mrp.imagePerformance, 'origin', 'blue'),
-        _generateOptionsForLineOnGraph('TON cache', metrics.ton.imagePerformance, 'cache', 'white'),
-        _generateOptionsForLineOnGraph('TON origin', metrics.ton.imagePerformance, 'origin', 'yellow')
-    ]);
+
+    let dataPoints = [];
+    let titles = [];
+    let data = [];
+    for (let brand of Object.keys(metrics)) {
+        if (metrics[brand] !== false) {
+            dataPoints.push(
+                _generateOptionsForLineOnGraph(brand.toUpperCase() + ' cache', metrics[brand].imagePerformance, 'cache', colors.pop()),
+                _generateOptionsForLineOnGraph(brand.toUpperCase() + ' origin', metrics[brand].imagePerformance, 'origin', colors.pop())
+            );
+            titles.push(brand.toUpperCase() + ' cache', brand.toUpperCase() + ' origin');
+            data.push(metrics[brand].average.cache, metrics[brand].average.origin);
+        }
+    }
+
+    line.setData(dataPoints);
 
     // Bar graph for brands
     const bar = grid.set(1, 0, 1, 1, contrib.bar, {
@@ -43,22 +53,8 @@ function init(metrics) {
    });
 
     bar.setData({
-        titles: [
-            'NAP cache',
-            'NAP origin',
-            'MRP cache',
-            'MRP origin',
-            'TON cache',
-            'TON origin'
-        ],
-        data: [
-            metrics.nap.average.cache,
-            metrics.nap.average.origin,
-            metrics.mrp.average.cache,
-            metrics.mrp.average.origin,
-            metrics.ton.average.cache,
-            metrics.ton.average.origin
-        ]
+        titles: titles,
+        data: data
     });
 
     screen.key(['escape', 'q', 'C-c'], function(ch, key) {
