@@ -1,5 +1,5 @@
-var requestPromise = require('./request-promise');
-const ProgressBar = require('progress');
+const requestPromise = require('./request-promise'),
+      ProgressBar = require('progress');
 
 const numberOfTests = process.env.NUMBER_OF_TESTS || 10;
 var bar;

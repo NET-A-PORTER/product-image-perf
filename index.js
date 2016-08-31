@@ -1,10 +1,9 @@
-const graph = require('./src/graph');
-const requestPromise = require('./src/request-promise');
-const collectPids = require('./src/collect-pids');
-const getImagePerformanceAverages = require('./src/image-performance');
-const fileSystem = require('./src/file-system');
-
-var argv = require('minimist')(process.argv.slice(2));
+const graph = require('./src/graph'),
+      requestPromise = require('./src/request-promise'),
+      collectPids = require('./src/collect-pids'),
+      getImagePerformanceAverages = require('./src/image-performance'),
+      fileSystem = require('./src/file-system'),
+      argv = require('minimist')(process.argv.slice(2));
 
 (async function() {
     const benchMarkFilename = process.env.BENCHMARK_FILENAME;

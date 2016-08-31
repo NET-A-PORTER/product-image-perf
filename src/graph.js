@@ -1,5 +1,5 @@
-const blessed = require('blessed');
-const contrib = require('blessed-contrib');
+const blessed = require('blessed'),
+      contrib = require('blessed-contrib');
 
 var colors = ['yellow', 'cyan', 'magenta', 'red', 'green', 'blue', 'white'];
 
