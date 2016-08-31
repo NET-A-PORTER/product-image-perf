@@ -17,7 +17,7 @@ var argv = require('minimist')(process.argv.slice(2));
             ton: false
         };
         for (let brand of argv._) {
-            if (!performance[brand])
+            if (performance[brand] === false)
                 performance[brand] = true;
         }
     } else {
