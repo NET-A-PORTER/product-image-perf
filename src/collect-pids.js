@@ -1,5 +1,5 @@
-const requestPromise = require('./request-promise');
-const fileSystem = require('./file-system');
+const requestPromise = require('./request-promise'),
+      fileSystem     = require('./file-system');
 
 async function init(brands) {
     return await _getPids(brands);
