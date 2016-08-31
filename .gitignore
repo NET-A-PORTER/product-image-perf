@@ -37,3 +37,6 @@ benchmarks/*
 #File crap
 .DS_Store
 static/.DS_Store
+/.idea/
+.idea/
+build/

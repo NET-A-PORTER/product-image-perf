@@ -30,13 +30,13 @@ function init(metrics) {
     let dataPoints = [];
     let titles = [];
     let data = [];
-    for (let brand of Object.keys(metrics)){
-        if(metrics[brand] !== false){
+    for (let brand of Object.keys(metrics)) {
+        if (metrics[brand] !== false) {
             dataPoints.push(
-                _generateOptionsForLineOnGraph(brand.toUpperCase()+' cache', metrics[brand].imagePerformance, 'cache', colors.pop()),
-                _generateOptionsForLineOnGraph(brand.toUpperCase()+' origin', metrics[brand].imagePerformance, 'origin', colors.pop())
+                _generateOptionsForLineOnGraph(brand.toUpperCase() + ' cache', metrics[brand].imagePerformance, 'cache', colors.pop()),
+                _generateOptionsForLineOnGraph(brand.toUpperCase() + ' origin', metrics[brand].imagePerformance, 'origin', colors.pop())
             );
-            titles.push(brand.toUpperCase()+' cache', brand.toUpperCase()+' origin');
+            titles.push(brand.toUpperCase() + ' cache', brand.toUpperCase() + ' origin');
             data.push(metrics[brand].average.cache, metrics[brand].average.origin);
         }
     }

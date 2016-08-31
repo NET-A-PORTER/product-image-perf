@@ -34,9 +34,9 @@ async function _getPids(brands) {
     console.log('Brands: ',brands);
     let pidFetchList = [];
 
-    for (let brand of brands){
+    for (let brand of brands) {
         pidFetchList.push(
-            _loadPids(brand.toUpperCase()+'_LOCAL_PIDS', brand.toLowerCase()+'.json', brand.toUpperCase(), numberOfPids)
+            _loadPids(brand.toUpperCase() + '_LOCAL_PIDS', brand.toLowerCase() + '.json', brand.toUpperCase(), numberOfPids)
         );
     }
 
@@ -45,15 +45,14 @@ async function _getPids(brands) {
         const brandPidsArr = await Promise.all(pidFetchList);
 
         // Collect the results
-        let c=0;
-        for (let brand of brands){
+        let c = 0;
+        for (let brand of brands) {
             result[brand] = brandPidsArr[c++];
         }
         return result;
     } catch (error) {
         console.error(error);
     }
-
 }
 
 async function _loadPids(key, filename, brand, numberOfPids) {
